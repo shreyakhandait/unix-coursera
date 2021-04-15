@@ -1,29 +1,22 @@
 #!/usr/bin/env bash
-filenum=$(ls | wc -l)
 
-function guess_filenum {
-	read guess
-	if [[ $guess -eq $filenum ]]
-	then
-		echo "Amazing!!! You finally guessed it!"
-		echo "Hooooooray"
-		echo "  So we have ..."
-		for f in $(ls)
-		do
-			echo "  - $f and "
-		done
-		echo "    ... and that was it."
-	else
-		if [[ $guess -gt $filenum ]]
-		then
-			echo "There is less... try again and press Enter :"
-			guess_filenum
-		else
-			echo "There is more... try again and press Enter :"
-			guess_filenum
-		fi
-	fi
+function guess(){
+    true_ans=$(ls -l |grep "^-"|wc -l)
+    while true;
+    do
+        echo "pleas enter your guess"
+        read  number
+        if [ $number -lt $true_ans ]
+        then
+            echo "your guess is Less then the true number"
+        elif [ $number -gt $true_ans ]
+        then
+            echo "your guess is Greater then the true number"
+        else
+            echo " congratulation,you are right!"
+        break;
+        fi
+    done
 }
-echo "Welcome to the guessing game!"
-echo "Guess how many files are in the current directory (pretend you don't know) and press Enter :"
-guess_filenum
+echo "guess the files number in the current directory!"
+guess
